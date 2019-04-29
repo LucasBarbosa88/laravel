@@ -27,15 +27,15 @@ class ProductController extends Controller
         return view('products.edit');
     }
 
-    public function show(ProductRepository $repository, $id)
+    public function show(ProductRepository $productRepository, $id)
     {
-        $product = $repository->find($id);
+        $product = $productRepository->find($id);
         $product->image = asset('images/'. $product->image);
 
         return view('products.show', compact('product'));
     }
 
-    public function store(ProductRequest $request, ProductRepository $repository)
+    public function store(ProductRequest $request, ProductRepository $productRepository)
     {
         $imageName = $request->file('image');
         $imageName = time() .'' . request()->image->getClientOriginalName();
@@ -52,7 +52,7 @@ class ProductController extends Controller
         return $this->chooseReturn('success', $message, 'products.index');
     }
 
-    public function update(ProductRequest $request, ProductRepository $repository, $id)
+    public function update(ProductRequest $request, ProductRepository $productRepository, $id)
     {
         $product = $productRepository->find($id);
         unlink('images/' . $product->image);
@@ -73,16 +73,22 @@ class ProductController extends Controller
         return $this->chooseReturn('success', $message, 'products.index');
     }
 
-    public function destroy()
+    public function destroy(ProductRepository $productRepository, $id)
     {
-
+        try {
+            $product = $productRepository->find($id);
+              unlink('images/' . $product->image);
+              $productRepository->delete($id);
+            return $this->chooseReturn('success', _m('product.success.destroy'));
+        } catch (\Exception $e) {
+            return $this->chooseReturn('error', _m('product.error.destroy'));
+        }
     }
 
     public function getPagination($pagination)
     {
-        $pagination->repository()
+        $pagination->repository(ProductRepository::class)
             ->where('user_id', current_user()->id)
-            ->resource();
-
+            ->resource(ProductResource::class);
     }
 }

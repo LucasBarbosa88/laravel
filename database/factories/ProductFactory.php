@@ -22,10 +22,11 @@ $factory->define(App\Models\Product::class, function (Faker $faker) {
     ];
 });
 
-$factory->state(App\Models\User::class, 'invalid', function ($faker) {
+$factory->state(App\Models\Product::class, 'invalid', function ($faker) {
     return [
         'name' => '',
-        'email' => '',
-        'password' => '',
+        'desccription' => '',
+        'price' => '',
+        'sku' => '',
     ];
 });
