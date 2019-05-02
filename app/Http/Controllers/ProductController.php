@@ -90,8 +90,8 @@ class ProductController extends Controller
     {
         try {
             $product = $productRepository->find($id);
-              unlink('images/' . $product->image);
-              $productRepository->delete($id);
+            unlink('images/' . $product->image);
+            dd($productRepository->delete($id));
             return $this->chooseReturn('success', _m('product.success.destroy'));
         } catch (\Exception $e) {
             return $this->chooseReturn('error', _m('product.error.destroy'));

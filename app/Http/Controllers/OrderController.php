@@ -21,19 +21,55 @@ class OrderController extends Controller
         return view('orders.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
-        
+        return $this->save("order", "create", $this->getCallableSave($request));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
-
+        return $this->save("order", "edit", $this->getCallableSave($request, $id), $id);
     }
 
-    public function destroy()
+    /**
+     * @param Request $request
+     * @param null $id
+     * @return \Closure
+     */
+    protected function getCallableSave(Request $request, $id = null)
     {
+        return function () use ($request, $id) {
+            $listRequest = $request->get("products_list", "[]");
+//            $productsJson = json_decode($listRequst);
+//            $this->throwIf(
+//                json_last_error() !== JSON_ERROR_NONE,
+//                "Não foi possível salvar o pedido, entre em contato com o suporte: " . json_last_error_msg()
+//            );
+            $this->throwIf(! $request->get("payway") && $request->get("payway") !== "0", "Tipo de Pagamento não informado");
+//            $this->insertItems($productsJson);
+            $this->insertOrUpdate($id, [
+                "canceled"          => false,
+                "print_client"      => $request->get("print_client", false),
+                "client_name"       => $request->get("client_name", null),
+                "client_type"       => $request->get("client_type", null),
+                "client_cpf"        => $request->get("client_cpf", null),
+                "client_cnpj"       => $request->get("client_cnpj", null),
+                "payway"            => $request->get("payway"),
+                "total_price"       => moneyToFloat($request->get("total_price", "R$ 0.00")),
+                "products_list"     => $listRequest,
+            ]);
+        };
+    }
 
+    public function destroy(OrderRepository $orderRepository, $id)
+    {
+        try {
+            $order = $orderRepository->find($id);
+            $orderRepository->delete($id);
+            return $this->chooseReturn('success', _m('order.success.destroy'));
+        } catch (\Exception $e) {
+            return $this->chooseReturn('error', _m('order.error.destroy'));
+        }
     }
 
     public function getPagination($pagination)
