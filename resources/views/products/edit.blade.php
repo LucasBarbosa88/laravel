@@ -16,10 +16,10 @@
 <div class="card">
     <div class="card-header">@lang('headings.products.edit')</div>
     <div class="card-body">
-        <form class="form-horizontal" method="POST" action="{{ route('products.update', $product->id) }}">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="{{ route('products.update', $product->id) }}">
             @method('PUT')
             @include('products.partials._form')
-            <button class="btn btn-primary" type="submit">@lang('buttons.common.edit')</button>
+            <button class="btn btn-primary" type="submit">@lang('labels.buttons.common.edit')</button>
         </form>
     </div>
 </div>

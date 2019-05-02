@@ -87,6 +87,9 @@ return [
     'unique'               => ':attribute já está em uso.',
     'uploaded'             => ':attribute falhou ao ser enviado.',
     'url'                  => 'O formato de :attribute é inválido.',
+    'price'                => 'preço',
+    'name'                 => 'nome',
+    'description'          => 'descrição', 
 
     /*
     |--------------------------------------------------------------------------

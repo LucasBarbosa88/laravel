@@ -7,9 +7,10 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 
+use Illuminate\Database\Eloquent\Model;
 use App\Scopes\Search as SearchScope;
 
-class Product extends Authenticatable
+class Product extends Model
 {
     use Notifiable, HasRoles, LogsActivity, SearchScope;
 
@@ -28,7 +29,7 @@ class Product extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'price',
+        'name', 'description', 'price', 'sku'
     ];
 
     protected static $logAttributes = [

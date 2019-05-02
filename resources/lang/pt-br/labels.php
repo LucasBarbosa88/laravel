@@ -5,5 +5,9 @@
      */
 
     return [
-        //
+        'buttons' => [
+            'common' => [
+                'edit' => 'Editar',
+            ]
+        ]
     ];

@@ -15,4 +15,18 @@ return [
         'edit' => 'Editar usuário',
         'create' => 'Cadastrar novo usuário',
     ],
+
+    'products' => [
+        'index' => 'Produtos',
+        'show' => 'Ver produto',
+        'edit' => 'Editar produto',
+        'create' => 'Cadastrar novo produto',
+    ],
+
+    'orders' => [
+        'index' => 'Pedidos',
+        'show' => 'Ver pedido',
+        'edit' => 'Editar pedido',
+        'create' => 'Cadastrar novo pedido',
+    ],
 ];

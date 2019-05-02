@@ -23,16 +23,13 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name' => 'required|max:255',
-            'description' => 'required|max:255',
-            'price' => 'required|number'
-        ];
+          $rules = [
+	            'name' => 'required|max:255',
+	            'image' => 'required|max:1040',
+                'price' => 'required|max:300',
+                'description' => 'required',
+          ];
 
-        // if (in_array($this->method(), ['PUT', 'PATCH'])) {
-        //     $rules['email'] .= ",{$this->user}";
-        // }
-
-        return $rules;
+          return $rules;
     }
 }

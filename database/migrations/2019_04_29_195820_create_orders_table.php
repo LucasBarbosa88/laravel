@@ -15,6 +15,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
+            $table->string("client_name")->nullable()->default(null);
+            $table->decimal("total_price", 10, 2)->default(0.00);
+            $table->longText("products_list")->nullable()->default(null);
             $table->timestamps();
         });
     }

@@ -1,8 +1,8 @@
 @csrf
 
 <div class="form-group">
-  <label for="productName">Nome</label>
-  <input type="name" name="name" class="form-control {{ has_error('name', 'has-danger') }}" id="productName" placeholder="Nome do produto" value="{{old('name') ?? $product->name ?? ''}}">
+  <label for="clientName">Nome do cliente</label>
+  <input type="name" name="name" class="form-control {{ has_error('name', 'has-danger') }}" id="productName" placeholder="Nome do cliente" value="{{old('name') ?? $order->client_name ?? ''}}">
   @errorblock('name')
 </div>
 
