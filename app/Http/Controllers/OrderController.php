@@ -21,9 +21,14 @@ class OrderController extends Controller
         return view('orders.create');
     }
 
-    public function store(Request $request)
+    public function store(OrderRepository $repository, Request $request)
     {
-        return $this->save("order", "create", $this->getCallableSave($request));
+        $data = $request->all();
+        dd($data);
+        $repository->create($data);
+        $message = _m('order.success.create');
+        return $this->chooseReturn('success', $message, 'orders.index');
+        // return $this->save("order", "create", $this->getCallableSave($request));
     }
 
     public function update(Request $request, $id)
@@ -40,13 +45,7 @@ class OrderController extends Controller
     {
         return function () use ($request, $id) {
             $listRequest = $request->get("products_list", "[]");
-//            $productsJson = json_decode($listRequst);
-//            $this->throwIf(
-//                json_last_error() !== JSON_ERROR_NONE,
-//                "Não foi possível salvar o pedido, entre em contato com o suporte: " . json_last_error_msg()
-//            );
             $this->throwIf(! $request->get("payway") && $request->get("payway") !== "0", "Tipo de Pagamento não informado");
-//            $this->insertItems($productsJson);
             $this->insertOrUpdate($id, [
                 "canceled"          => false,
                 "print_client"      => $request->get("print_client", false),

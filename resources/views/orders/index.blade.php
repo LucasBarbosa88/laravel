@@ -41,12 +41,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    @include('products.partials._head')
+                    @include('orders.partials._head')
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, index) in items" :key="index">
-                    @include('products.partials._body')
+                    @include('orders.partials._body')
                     <td>@include('shared.partials._buttons_actions')</td>
                 </tr>
             </tbody>

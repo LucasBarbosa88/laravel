@@ -14,7 +14,7 @@
 
 <div class="form-group">
   <label for="productPrice">Preço</label>
-  <input type="name" name="price" class="form-control {{ has_error('price', 'has-danger') }}" id="productPrice" placeholder="Preço do produto" value="{{old('price') ?? $product->price ?? ''}}">
+  <input type="name" name="price" class="form-control money {{ has_error('price', 'has-danger') }}" id="productPrice" placeholder="Preço do produto" value="{{old('price') ?? $product->price ?? ''}}">
   @errorblock('price')
 </div>
 

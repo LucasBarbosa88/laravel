@@ -2,21 +2,19 @@
 <div class="form-group row">
     <label for="created_at" class="col-sm-1 col-form-label text-md-right">Data: </label>
     <div class="col-md-2">
-        <input id="created_at" disabled type="text" class="form-control" name="created_at" value="{{ valueOf($order, 'created_at', null, "brDate") }}">
+        <input type="text" name="created_at" disabled class="form-control" id="created_at" value="{{old('created_at') ?? $order->created_at ?? ''}}">
     </div>
     <label for="updated_at" class="col-sm-3 col-form-label text-md-right">Ultima Atualização: </label>
     <div class="col-md-2">
-        <input id="updated_at" disabled type="text" class="form-control" name="updated_at" value="{{ valueOf($order, 'updated_at', null, "brDate") }}">
+        <input id="updated_at" disabled type="text" class="form-control" name="updated_at" value="{{ old('updated_at') ?? $order->updated_at ?? '' }}">
     </div>
     
 </div>
 <div class="form-group row">
     <label for="client_name" class="col-sm-1 col-form-label text-md-right">Cliente: </label>
     <div class="col-md-7">
-        <input id="client_name" type="text" class="form-control{{ $errors->has('client_name') ? ' is-invalid' : '' }}" name="client_name" value="{{ valueOf($order, 'client_name') }}">
-        @if ($errors->has('client_name'))
-            {!! showErrors( $errors->first('client_name') ) !!}
-        @endif
+        <input id="client_name" type="text" class="form-control{{ has_error('client_name', 'has-danger') }}" name="client_name" value="{{ old('client_name') ?? $order->client_name ?? '' }}">
+        @errorblock('client_name')
     </div>
 </div>
 <hr />
@@ -28,9 +26,7 @@
     <label for="product_id" class="col-sm-1 col-form-label text-md-right">Produto:</label>
     <div class="col-md-3">
         <select name="product_id" id="product_id" class="form-control">
-            @foreach($products as $prod)
-                <option value="{{$prod->id}}">{{$product->name}}</option>
-            @endforeach
+            
         </select>
     </div>
 </div>
@@ -46,7 +42,7 @@
     <button type="button" class="btn-dark btn btn-small" id="btnAddProd" {{@$action !== "show" ? "" : "disabled"}}>Adicionar</button>
 </div>
 <div class="form-group row">
-    <input type="text" name="products_list" id="products_list" style="display: none" value="{{ valueOf($order, "products_list", "[]") }}"/>
+    <input type="text" name="products_list" id="products_list" style="display: none" value="{{ old('products_list') ?? $order->products_list ?? '[]' }}"/>
     <div class="col-sm-10 offset-1">
         <table class="table table-sm table-condensed table-stripped" id="order-list">
             <thead>
@@ -61,7 +57,7 @@
             </thead>
             <tbody>
             {{--@if(isset($order) && $order)--}}
-            {{--@foreach(json_decode($order->products_list) as $item)--}}
+            {{--@foreach(json_decode($products) as $item)--}}
             {{--<tr>--}}
             {{--<td>{{$item->product_id}}</td>--}}
             {{--<td>{{$item->product_name}}</td>--}}
@@ -82,13 +78,11 @@
 <div class="form-group row">
     <label for="total_price" class="col-sm-1 col-form-label text-md-right">Total:</label>
     <div class="col-md-2">
-        <input id="total_price" type="text" disabled class="form-control money{{ $errors->has('total_price') ? ' is-invalid' : '' }}" name="total_price" value="{{ valueOf($order, 'total_price', "R$ 0.00") }}">
-        @if ($errors->has('total_price'))
-            {!! showErrors( $errors->first('total_price') ) !!}
-        @endif
+        <input id="total_price" type="text" disabled class="form-control {{ has_error('total_price', 'has-danger')  }}" name="total_price" value="{{ old(total_price) ?? $order->total_price ??  '' }}">
+        @errorblock('total_price')
     </div>
 </div>
-<script type="text/javascript" src="{{asset("js/order.js")}}"></script>
+<script type="text/javascript" src="{{ asset('js/order.js') }}"></script>
 <script type="text/javascript">
     let tempProducts = '{!! $products  !!}';
     if (tempProducts.length === 0) {
