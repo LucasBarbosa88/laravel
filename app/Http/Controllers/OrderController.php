@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\OrderRepository;
 
 use App\Http\Requests\OrderRequest;
+use App\Repositories\ProductRepository;
 
 use Illuminate\Http\Request;
 use App\Http\Resources\Order as OrderResource;
@@ -16,9 +17,10 @@ class OrderController extends Controller
         return view('orders.index');
     }
 
-    public function create()
+    public function create(ProductRepository $repository)
     {
-        return view('orders.create');
+        $products = $repository->all();
+        return view('orders.create', compact('products'));
     }
 
     public function store(OrderRepository $repository, Request $request)

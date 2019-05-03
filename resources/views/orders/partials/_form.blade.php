@@ -78,7 +78,7 @@
 <div class="form-group row">
     <label for="total_price" class="col-sm-1 col-form-label text-md-right">Total:</label>
     <div class="col-md-2">
-        <input id="total_price" type="text" disabled class="form-control {{ has_error('total_price', 'has-danger')  }}" name="total_price" value="{{ old(total_price) ?? $order->total_price ??  '' }}">
+        <input id="total_price" type="text" disabled class="form-control {{ has_error('total_price', 'has-danger')  }}" name="total_price" value="{{ old('total_price') ?? $order->total_price ??  '' }}">
         @errorblock('total_price')
     </div>
 </div>
