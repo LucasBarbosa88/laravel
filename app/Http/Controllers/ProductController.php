@@ -44,18 +44,6 @@ class ProductController extends Controller
 
         $data = $request->only('price', 'description', 'name');
         $data['image'] = $imageName;
-        //cria a model order
-        // $productsJson = $request->get("produtos_json", "[]");
-        // $products = json_decode($productsJson);
-        // foreach ($products as $prod) {
-        //     $item = new OrderItem();
-        //     $item->price = $prod[2];
-        //     $item->quantity = $prod[3];
-        //     $item->product_id = $prod[0];
-        //     $item->order_id = $order->id;
-        //     $item->save();
-        // }
-        //FIM ORDER
         $replace = preg_replace('/[^a-z0-9]/i', '', $data['price']);
         $data['price'] = $replace;
         $data['sku'] = ' ';
