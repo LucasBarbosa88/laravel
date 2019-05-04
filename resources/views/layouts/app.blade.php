@@ -14,6 +14,41 @@
     <!-- Styles -->
     <link href="{{ mix('assets/css/app.css') }}" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> @yield('header')
+    <script src="{{ url('js/jquery.min.js') }}"></script>
+    <script src="{{ url('lib/bootstrap/js/bootstrap.min.js') }}" defer></script>
+    <script src="{{ url('js/bootbox.min.js') }}" defer></script>
+    <script src="{{ url('js/jqueryMaskMoney.js') }}" defer></script>
+    <script src="{{ url('js/jquery.mask.min.js') }}" defer></script>
+    <script src="{{ url('lib/boostrap-table/js/bootstrap-table.min.js') }}" defer></script>
+    <script src="{{ url('lib/boostrap-table/locale/bootstrap-table-pt-BR.min.js') }}" defer></script>
+    <script src="{{ url('js/customJquery.js') }}" defer></script>
+    <script src="{{ url('js/collection.js') }}" defer></script>
+    <script src="{{ url('js/util.js') }}" defer></script>
+    <script src="{{ url('js/custom.js') }}" defer></script>
+
+
+    <script type="text/javascript">
+            let action = "";
+            @isset($action)
+                action = "{{$action}}";
+            @endisset
+            let hasErrors = false;
+            @if($errors->any())
+                hasErrors = true;
+            @endif
+
+            function reportLog(e) {
+                let msg = "";
+                if (e instanceof Error) {
+                    msg = e.message;
+                } else if (typeof e === "string") {
+                    msg = e;
+                } else {
+                    msg = "unkown error";
+                }
+                console.log(msg + ": ", e);
+            }
+        </script>
 </head>
 
 <body>
@@ -75,6 +110,7 @@
     <script src="{{ mix('assets/js/manifest.js') }}"></script>
     <script src="{{ mix('assets/js/vendor.js') }}"></script>
     <script src="{{ mix('assets/js/app.js') }}"></script>
+  
 
     @yield('footer')
 </body>

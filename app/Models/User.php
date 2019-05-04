@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Auth\Authenticatable as AuthenticableTrait;
 
 use App\Scopes\Search as SearchScope;
 
 class User extends Model implements Authenticatable
 {
-    use AuthenticableTrait;
-    // use Notifiable, HasRoles, LogsActivity, SearchScope;
+    use Notifiable, HasRoles, LogsActivity, SearchScope, AuthenticableTrait;
 
     /**
      * The attributes that are used to search.

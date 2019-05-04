@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 
@@ -12,7 +10,7 @@ use App\Scopes\Search as SearchScope;
 
 class Product extends Model
 {
-    use Notifiable, HasRoles, LogsActivity, SearchScope;
+    use LogsActivity, SearchScope;
 
     /**
      * The attributes that are used to search.

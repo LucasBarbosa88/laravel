@@ -26,16 +26,19 @@ class OrderController extends Controller
     public function store(OrderRepository $repository, Request $request)
     {
         $data = $request->all();
-        dd($data);
         $repository->create($data);
         $message = _m('order.success.create');
         return $this->chooseReturn('success', $message, 'orders.index');
         // return $this->save("order", "create", $this->getCallableSave($request));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, OrderRepository $repository, $id)
     {
-        return $this->save("order", "edit", $this->getCallableSave($request, $id), $id);
+        $data = $request->all();
+        $repository->update($id, $data);
+        $message = _m('order.success.create');
+        return $this->chooseReturn('success', $message, 'orders.index');
+        // return $this->save("order", "edit", $this->getCallableSave($request, $id), $id);
     }
 
     /**

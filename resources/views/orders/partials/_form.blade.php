@@ -82,7 +82,7 @@
         @errorblock('total_price')
     </div>
 </div>
-<script type="text/javascript" src="{{ asset('js/order.js') }}"></script>
+<script type="text/javascript" src="{{ url('js/order.js') }}"></script>
 <script type="text/javascript">
     let tempProducts = '{!! $products  !!}';
     if (tempProducts.length === 0) {
