@@ -23,22 +23,38 @@ class OrderController extends Controller
         return view('orders.create', compact('products'));
     }
 
+    public function edit(OrderRepository $orderRepository, ProductRepository $repository,$id)
+    {
+        $order = $orderRepository->find($id);
+        $products = $repository->all();
+        return view('orders.edit', compact('products', 'order'));
+    }
+
+    public function show(OrderRepository $repository, ProductRepository $productRepository, $id)
+    {
+        $order = $repository->find($id);
+        $products = $productRepository->all();
+        return view('orders.show', compact('order', 'products'));
+    }
+
     public function store(OrderRepository $repository, Request $request)
     {
         $data = $request->all();
+        $replace = preg_replace("/[^0-9]/", '', $data['total_price']);
+        $data['total_price'] = $replace;
         $repository->create($data);
         $message = _m('order.success.create');
         return $this->chooseReturn('success', $message, 'orders.index');
-        // return $this->save("order", "create", $this->getCallableSave($request));
     }
 
     public function update(Request $request, OrderRepository $repository, $id)
     {
         $data = $request->all();
-        $repository->update($id, $data);
+        $replace = preg_replace('/[^a-z0-9]/i', '', $data['total_price']);
+        $data['total_price'] = $replace;
+        $repository->update($data, $id);
         $message = _m('order.success.create');
         return $this->chooseReturn('success', $message, 'orders.index');
-        // return $this->save("order", "edit", $this->getCallableSave($request, $id), $id);
     }
 
     /**
@@ -59,7 +75,7 @@ class OrderController extends Controller
                 "client_cpf"        => $request->get("client_cpf", null),
                 "client_cnpj"       => $request->get("client_cnpj", null),
                 "payway"            => $request->get("payway"),
-                "total_price"       => moneyToFloat($request->get("total_price", "R$ 0.00")),
+                "total_price"       => moneyToFloat($request->get("total_price", "0.00")),
                 "products_list"     => $listRequest,
             ]);
         };

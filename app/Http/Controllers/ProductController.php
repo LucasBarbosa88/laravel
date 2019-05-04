@@ -31,19 +31,12 @@ class ProductController extends Controller
     public function show(ProductRepository $productRepository, $id)
     {
         $product = $productRepository->find($id);
-        $product->image = asset('images/'. $product->image);
-
         return view('products.show', compact('product'));
     }
 
     public function store(ProductRequest $request, ProductRepository $productRepository)
     {
-        $imageName = $request->file('image');
-        $imageName = time() .'' . request()->image->getClientOriginalName();
-        request()->image->move(public_path('/images'), $imageName);
-
-        $data = $request->only('price', 'description', 'name');
-        $data['image'] = $imageName;
+        $data = $request->only('price', 'description', 'name', 'sku');        
         $replace = preg_replace('/[^a-z0-9]/i', '', $data['price']);
         $data['price'] = $replace;
         $data['sku'] = ' ';
@@ -56,14 +49,8 @@ class ProductController extends Controller
     public function update(ProductRequest $request, ProductRepository $productRepository, $id)
     {
         $product = $productRepository->find($id);
-        unlink('images/' . $product->image);
-
-        $imageName = $request->file('image');
-        $imageName = time() .'' . request()->image->getClientOriginalName();
-        request()->image->move(public_path('/images'), $imageName);
 
         $data = $request->all();
-        $data['image'] = $imageName;
         $request->value = $request->value;
         $replace = preg_replace('/[^a-z0-9]/i', '', $request);
         $request->value = $replace;
@@ -78,7 +65,6 @@ class ProductController extends Controller
     {
         try {
             $product = $productRepository->find($id);
-            unlink('images/' . $product->image);
             $productRepository->delete($id);
             return $this->chooseReturn('success', _m('product.success.destroy'));
         } catch (\Exception $e) {

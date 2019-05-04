@@ -26,14 +26,16 @@
     <label for="product_id" class="col-sm-1 col-form-label text-md-right">Produto:</label>
     <div class="col-md-3">
         <select name="product_id" id="product_id" class="form-control">
-            
+            @foreach($products as $prod)
+                <option value="{{$prod->id}}">{{$prod->description}}</option>
+            @endforeach
         </select>
     </div>
 </div>
 <div class="form-group row">
     <label for="product_price" class="col-sm-3 col-form-label text-md-right">Valor:</label>
     <div class="col-md-2">
-        <input type="text" name="product_price" id="product_price" class="form-control money">
+        <input type="text" name="product_price" id="product_price" class="form-control">
     </div>
     <label for="product_count" class="col-sm-2 col-form-label text-md-right">Quantidade:</label>
     <div class="col-md-2">
@@ -42,7 +44,7 @@
     <button type="button" class="btn-dark btn btn-small" id="btnAddProd" {{@$action !== "show" ? "" : "disabled"}}>Adicionar</button>
 </div>
 <div class="form-group row">
-    <input type="text" name="products_list" id="products_list" style="display: none" value="{{ old('products_list') ?? $order->products_list ?? '[]' }}"/>
+    <input type="text" name="products_list" id="products_list" style="display: none" value="{{ old('products_list') ?? $order->products_list ?? '' }}"/>
     <div class="col-sm-10 offset-1">
         <table class="table table-sm table-condensed table-stripped" id="order-list">
             <thead>
@@ -78,7 +80,7 @@
 <div class="form-group row">
     <label for="total_price" class="col-sm-1 col-form-label text-md-right">Total:</label>
     <div class="col-md-2">
-        <input id="total_price" type="text" disabled class="form-control {{ has_error('total_price', 'has-danger')  }}" name="total_price" value="{{ old('total_price') ?? $order->total_price ??  '' }}">
+        <input id="total_price" type="text" class="form-control {{ has_error('total_price', 'has-danger')  }}" name="total_price" value="{{ old('total_price') ?? $order->total_price ??  '' }}">
         @errorblock('total_price')
     </div>
 </div>

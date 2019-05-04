@@ -21,10 +21,10 @@ class Product extends Resource
             'created_at' => format_date($this->created_at),
 
             'links' => [
-                'create' => $this->when(true, route('products.edit', $this->id)),
-                'edit' => $this->when(true, route('products.edit', $this->id)),
-                'show' => $this->when(true, route('products.show', $this->id)),
-                'destroy' => $this->when(true, route('products.destroy', $this->id)),
+                'create' => route('products.edit', $this->id),
+                'edit' => route('products.edit', $this->id),
+                'show' => route('products.show', $this->id),
+                'destroy' => route('products.destroy', $this->id),
             ],
         ];
     }

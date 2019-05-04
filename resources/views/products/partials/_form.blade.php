@@ -18,9 +18,3 @@
   @errorblock('price')
 </div>
 
-<div class="form-group">
-  <label for="image">Imagem do produto</label>
-  <input type="file" name="image" accept=".jpg, .png, .jpeg"  class="form-control {{ has_error('image', 'has-danger') }}" id="image" value="{{old('value') ?? $product->image ?? ''}}">
-  @errorblock('image')
-</div>
-
